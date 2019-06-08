@@ -50,11 +50,13 @@ class Person(models.Model):
         'Estado civil', default=0, choices=CIVIL_CHOICES)
     address = models.ManyToManyField(
         Address, blank=True, related_name='person')
+    address.verbose_name = 'Dirección'
     dwelling = models.ManyToManyField(
         Dwelling, blank=True, related_name='person')
+    dwelling.verbose_name = 'Vivienda'
     income = models.ManyToManyField(
         Income, blank=True, related_name='person')
-
+    income.verbose_name = 'Ingreso'
     is_working = models.BooleanField('Trabaja', default=False)
     work_place = models.CharField(
         'Lugar de trabajo',
@@ -184,9 +186,24 @@ class VCard(models.Model):
 
 
 class Son(models.Model):
-    parent = models.ManyToManyField(Person, related_name='sons')
+    PRESCHOOL = 0
+    PRIMARYSCHOOL = 1
+    SECONDARYSCHOOL = 2
+    parent = models.ForeignKey(
+        Person,
+        related_name='sons',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
     first_name = models.CharField('Nombre', max_length=128)
     last_name = models.CharField('Apellido', max_length=128)
+    date_of_birth = models.DateField('Fecha de nacimiento')
+    STAGES_CHOICES = ((PRESCHOOL, 'Jardin'), (PRIMARYSCHOOL, 'Primaria'),
+                      (SECONDARYSCHOOL, 'Secundario'))
+    education_stage = models.IntegerField(
+        'Nivel eductivo alcazado',
+        default=0,
+        choices=STAGES_CHOICES)
 
     class Meta:
         verbose_name = 'Hijo'
