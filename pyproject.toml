@@ -10,7 +10,6 @@ python = "^3.7"
 Django = "^2.2"
 django-jet = "^1.0"
 Pillow = "^6.0"
-djangorestframework = "^3.9"
 
 [tool.poetry.dev-dependencies]
 pep8 = "^1.7"
