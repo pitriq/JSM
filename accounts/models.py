@@ -2,6 +2,7 @@ import uuid
 
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -72,16 +73,11 @@ class CustomUserManager(BaseUserManager):
                                  is_staff=True, is_superuser=True, **extra_fields)
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     """
     Model that represents an user.
     To be active, the user must register and confirm his email.
     """
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False)
-
     first_name = models.CharField(_('First Name'), max_length=50)
     last_name = models.CharField(_('Last Name'), max_length=50)
     email = models.EmailField(_('Email address'), unique=True)
