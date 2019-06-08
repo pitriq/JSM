@@ -106,3 +106,7 @@ venv.bak/
 
 #vscode
 .vscode/
+
+#django static and media files
+media/
+static/
