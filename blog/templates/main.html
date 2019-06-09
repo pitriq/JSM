@@ -7,42 +7,51 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title }}</title>
     <link rel="stylesheet" href="{% static 'css/main.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,800,900&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="wrapper">
 
     <div class="nav">
-      <span class="title">
-        El blog de la parroquia Jesus Salvador del Mundo
-      </span>
+      <div class="title">
+        <span>J</span>
+        <span>S</span>
+        <span>M</span>
+      </div>
     </div>
 
     <div class="content">
       {% for post in posts %}
-        <span>{{ post.title }}</span>
+        <div class="card" data-post-id="{{post.id}}" style="background:url({{post.cover_image.url}})">
+          <div class="card__content">
+            <div class="card__title">
+              <span>{{ post.title }}</span>
+            </div>
+            <div class="card__desc">
+              <span>{{ post.content|safe|truncatewords_html:5 }}</span>
+            </div>
+          </div>
+        </div>
       {% endfor %}
     </div>
 
     <div class="pagination">
-      <span class="step-links">
-        {% if posts.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ posts.previous_page_number }}">previous</a>
-        {% endif %}
+      {% if posts.has_previous %}
+          <a href="?page=1">&laquo; principio</a>
+          <a href="?page={{ posts.previous_page_number }}">anterior</a>
+      {% endif %}
 
-        <span class="current">
-            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
-        </span>
-
-        {% if posts.has_next %}
-            <a href="?page={{ posts.next_page_number }}">next</a>
-            <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
+      <span class="current">
+          Página <b>{{ posts.number }}</b> de {{ posts.paginator.num_pages }}
       </span>
+
+      {% if posts.has_next %}
+          <a href="?page={{ posts.next_page_number }}">siguiente</a>
+          <a href="?page={{ posts.paginator.num_pages }}">final &raquo;</a>
+      {% endif %}
     </div>
   
   </div>
-
-  {% comment %} <script src=""></script> {% endcomment %}
+  <script src="{% static 'js/main.js'%}"></script>
 </body>
 </html>

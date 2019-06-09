@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'css/post_detail.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,800,900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+
+    <div class="nav">
+      <div class="nav__section">
+        <div class="back">
+          <span>➜</span>
+          <span>Volver</span>
+        </div>
+      </div>
+      <div class="nav__section">
+        <div class="title">
+          <span>J</span>
+          <span>S</span>
+          <span>M</span>
+        </div>
+      </div>
+      <div class="nav__section"></div>
+    </div>
+
+    <div class="content">
+      <span class="content__title">{{post.title}}</span>
+      <span class="content__author">por {{post.author}}</span>
+      <p>{{post.content|safe}}</p>
+    </div>
+  
+  </div>
+  <script src="{% static 'js/post_detail.js'%}"></script>
+</body>
+</html>
