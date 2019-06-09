@@ -1,5 +1,7 @@
 from django.db import models
 
+from config.settings.development import AUTH_USER_MODEL
+
 
 class Address(models.Model):
     title = models.CharField('Descripción', max_length=128)
@@ -211,3 +213,73 @@ class Son(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+
+class DayOfWeek(models.Model):
+    name = models.CharField('Dia de la semana', max_length=16, unique=True)
+
+    class Meta:
+        verbose_name = 'Dia de la semana'
+        verbose_name = 'Dias de la semana'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class Activity(models.Model):
+    title = models.CharField('Nombre de la actividad', max_length=128)
+    teacher = models.ManyToManyField(
+        AUTH_USER_MODEL, related_name='activities')
+    teacher.verbose_name = 'Profesor'
+    start_date = models.DateField('Comienzo de la actividad')
+    end_date = models.DateField('Fin de la actividad')
+    student = models.ManyToManyField(Person, related_name='activities')
+    student.verbose_name = 'Inscriptos'
+
+    class Meta:
+        verbose_name = 'Actividad'
+        verbose_name_plural = 'Actividades'
+
+    def __str__(self):
+        return f'{self.title}'
+
+
+class Turn(models.Model):
+    day_of_week = models.ForeignKey(
+        DayOfWeek,
+        related_name='activities',
+        on_delete=models.CASCADE)
+    day_of_week.verbose_name = 'Dia de la semana'
+    start_time = models.TimeField('Hora de inicio de la actividad')
+    end_time = models.TimeField('Hora de end de la actividad')
+    activity = models.ForeignKey(
+        Activity,
+        related_name='turns',
+        on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Turno'
+        verbose_name_plural = 'Turnos'
+
+    def __str__(self):
+        return f'{self.activity} {self.day_of_week} {self.start_time} {self.end_time}'
+
+
+class Assistance(models.Model):
+    date = models.DateField(auto_now_add=True)
+    activity = models.ForeignKey(
+        Activity,
+        related_name='courses',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE)
+    activity.verbose_name = 'Actividad'
+    assistance = models.ManyToManyField(Person, related_name='courses')
+    assistance.verbose_name = 'Quien esta presente?'
+
+    class Meta:
+        verbose_name = 'Asistencia'
+        verbose_name_plural = 'Asistencias'
+
+    def __str__(self):
+        return f'{self.activity} {self.date}'
