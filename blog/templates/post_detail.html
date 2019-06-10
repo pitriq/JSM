@@ -15,7 +15,11 @@
     <div class="nav">
       <div class="nav__section">
         <div class="back">
+          {% if not from_url %}
+          <a href="/blog" style="text-decoration: none; color:#212121">
+          {% else %}
           <a href="{{from_url}}" style="text-decoration: none; color:#212121">
+          {% endif %}
             <span>➜</span>
             <span>Volver</span>
           </a>
