@@ -1,7 +1,6 @@
-import uuid
-
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -72,30 +71,22 @@ class CustomUserManager(BaseUserManager):
                                  is_staff=True, is_superuser=True, **extra_fields)
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     """
     Model that represents an user.
     To be active, the user must register and confirm his email.
     """
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False)
+    first_name = models.CharField(_('Nombre'), max_length=50)
+    last_name = models.CharField(_('Apellido'), max_length=50)
+    email = models.EmailField(_('Email'), unique=True)
 
-    first_name = models.CharField(_('First Name'), max_length=50)
-    last_name = models.CharField(_('Last Name'), max_length=50)
-    email = models.EmailField(_('Email address'), unique=True)
+    is_staff = models.BooleanField(_('Es staff'), default=False)
+    is_superuser = models.BooleanField(_('Es superusuario'), default=False)
+    is_active = models.BooleanField(_('Activo'), default=True)
 
-    confirmed_email = models.BooleanField(default=False)
-
-    is_staff = models.BooleanField(_('staff status'), default=False)
-    is_superuser = models.BooleanField(_('superuser status'), default=False)
-    is_active = models.BooleanField(_('active'), default=True)
-
-    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
-    date_updated = models.DateTimeField(_('date updated'), auto_now=True)
-
-    activation_key = models.UUIDField(unique=True, default=uuid.uuid4)  # email
+    date_joined = models.DateTimeField(
+        _('Fecha de ingreso'), auto_now_add=True)
+    date_updated = models.DateTimeField(_('Último ingreso'), auto_now=True)
 
     USERNAME_FIELD = 'email'
 
@@ -122,21 +113,6 @@ class User(AbstractBaseUser):
         """
         return self.first_name
 
-    def activation_expired(self):
-        """
-        Check if user's activation has expired.
-        :return: boolean
-        """
-        return self.date_joined + \
-            timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS) < timezone.now()
-
-    def confirm_email(self):
-        """
-        Confirm email.
-        :return: boolean
-        """
-        if not self.activation_expired() and not self.confirmed_email:
-            self.confirmed_email = True
-            self.save()
-            return True
-        return False
+    class Meta:
+        verbose_name = _('Usuario')
+        verbose_name_plural = _('Usuarios')

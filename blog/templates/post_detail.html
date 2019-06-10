@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'css/post_detail.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,800,900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+
+    <div class="nav">
+      <div class="nav__section">
+        <div class="back">
+          {% if not from_url %}
+          <a href="/blog" style="text-decoration: none; color:#212121">
+          {% else %}
+          <a href="{{from_url}}" style="text-decoration: none; color:#212121">
+          {% endif %}
+            <span>➜</span>
+            <span>Volver</span>
+          </a>
+        </div>
+      </div>
+      <div class="nav__section">
+        <div class="title">
+          <span>J</span>
+          <span>S</span>
+          <span>M</span>
+        </div>
+      </div>
+      <div class="nav__section"></div>
+    </div>
+
+    <div class="content">
+      <span class="content__title">{{post.title}}</span>
+      <span class="content__author">por {{post.author.get_full_name}}</span>
+      <span class="content__date">{{post.date_published}}</span>
+      <p>{{post.content|safe}}</p>
+    </div>
+  
+  </div>
+</body>
+</html>

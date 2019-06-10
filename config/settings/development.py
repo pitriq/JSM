@@ -26,8 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'rest_framework'
+    'management.apps.ManagementConfig',
+    'accounts.apps.AccountsConfig',
+    'ckeditor',
+    'ckeditor_uploader',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -108,11 +111,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, os.pardir, 'static')
 STATIC_URL = '/static/'
 
-# Email activation
+# Media
 
-ACCOUNT_ACTIVATION_DAYS = 10
+MEDIA_ROOT = os.path.join(BASE_DIR, os.pardir, 'media')
+MEDIA_URL = '/media/'
+
+# Ckeditor upload path
+
+CKEDITOR_UPLOAD_PATH = "blog/posts/"
 
 # Authentication
 
