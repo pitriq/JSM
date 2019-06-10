@@ -22,7 +22,6 @@ class ActivityAdmin(admin.ModelAdmin):
         return qs
 
     def number_of_students(self, obj):
-        print(obj)
         return f'{obj.student.all().count()}'
 
     number_of_students.short_description = 'Numero de inscriptos'
