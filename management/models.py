@@ -3,18 +3,6 @@ from django.db import models
 from config.settings.development import AUTH_USER_MODEL
 
 
-class Address(models.Model):
-    title = models.CharField('Descripción', max_length=128)
-    address = models.CharField('Dirección', max_length=128)
-
-    class Meta:
-        verbose_name = 'Dirección'
-        verbose_name_plural = 'Direcciónes'
-
-    def __str__(self):
-        return f'{self.title}'
-
-
 class Dwelling(models.Model):
     type = models.CharField('Tipo de vivienda', max_length=64)
 
@@ -48,11 +36,13 @@ class Person(models.Model):
     last_name = models.CharField('Apellido', max_length=128)
     date_of_birth = models.DateField('Fecha de nacimiento')
     dni = models.IntegerField('DNI', unique=True)
+    address = models.CharField(
+        'Dirección',
+        max_length=128,
+        blank=True,
+        null=True)
     civil_status = models.IntegerField(
         'Estado civil', default=0, choices=CIVIL_CHOICES)
-    address = models.ManyToManyField(
-        Address, blank=True, related_name='person')
-    address.verbose_name = 'Dirección'
     dwelling = models.ManyToManyField(
         Dwelling, blank=True, related_name='person')
     dwelling.verbose_name = 'Vivienda'
@@ -114,8 +104,11 @@ class Person(models.Model):
 class Relative(models.Model):
     first_name = models.CharField('Nombre', max_length=128)
     last_name = models.CharField('Apellido', max_length=128)
-    address = models.ManyToManyField(
-        Address, blank=True, related_name='relative')
+    address = models.CharField(
+        'Dirección',
+        max_length=128,
+        blank=True,
+        null=True)
 
 
 class ResponsibleFamily(Relative):
