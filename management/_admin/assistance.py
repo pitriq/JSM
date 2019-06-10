@@ -6,7 +6,7 @@ from management.models import Activity, Assistance
 @admin.register(Assistance)
 class AssistanceAdmin(admin.ModelAdmin):
     search_fields = ('activity__title',)
-    list_display = ('activity', 'date',)
+    list_display = ('activity', 'number_of_assistance', 'date',)
     list_filter = ('date',)
     fieldsets = (
         ('Asistencia', {
@@ -30,3 +30,8 @@ class AssistanceAdmin(admin.ModelAdmin):
         if obj:
             return self.readonly_fields + ('activity', )
         return self.readonly_fields
+
+    def number_of_assistance(self, obj):
+        return f'{obj.assistance.all().count()}'
+
+    number_of_assistance.short_description = 'Numero de asistentes'

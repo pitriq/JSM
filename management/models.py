@@ -266,7 +266,7 @@ class Turn(models.Model):
 
 
 class Assistance(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField('Fecha', auto_now_add=True)
     activity = models.ForeignKey(
         Activity,
         related_name='courses',
