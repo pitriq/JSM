@@ -13,7 +13,7 @@ class ResponsibleFamilyInline(admin.StackedInline):
     extra = 1
     fieldsets = (
         (None, {
-            'fields': ('type', 'is_alive', 'first_name', 'last_name', 'work')
+            'fields': ('type', 'is_alive', 'first_name', 'last_name', 'address', 'work')
         }),
     )
 
@@ -23,7 +23,7 @@ class FamilyInline(admin.StackedInline):
     extra = 1
     fieldsets = (
         (None, {
-            'fields': ('type', 'first_name', 'last_name', 'date_of_birth')
+            'fields': ('type', 'first_name', 'last_name', 'date_of_birth', 'address')
         }),
     )
 
