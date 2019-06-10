@@ -20,5 +20,7 @@ def post_detail(request, post_id):
     if not post:
         return HttpResponseBadRequest()
 
+    from_url = request.GET.get('from_url', '')
     post = post.first()
-    return render(request, 'post_detail.html', {'post': post})
+    return render(request, 'post_detail.html', {
+                  'post': post, 'from_url': from_url})
