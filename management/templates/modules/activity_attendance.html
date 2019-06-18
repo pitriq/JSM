@@ -42,8 +42,8 @@
         activity_select.change((_) => {
             while (chart.data.datasets[0].data.length > 0)
                 chart.data.datasets[0].data.pop();
-            chart.data.datasets[0].data.push(100 - selected().attendance);
             chart.data.datasets[0].data.push(selected().attendance);
+            chart.data.datasets[0].data.push(100 - selected().attendance);
             chart.update();
         });
 
