@@ -28,7 +28,7 @@ class ActivityAttendance(DashboardModule):
                 percentage += (attendance * 100.0) / total_enrolled
             attendance_data.append({
                 'title': activity.title,
-                'attendace': percentage / self.q,
+                'attendance': percentage / self.q,
             })
             activity_labels.append(activity.title)
 

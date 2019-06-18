@@ -2,13 +2,13 @@
 <link rel="stylesheet" href="{% static 'css/Chart.min.css' %}">
 
 <div style="padding:10%">
-    <canvas id="graph" width="300" height="300"></canvas>
+    <canvas id="age_graph" width="300" height="300"></canvas>
 </div>
 
 <script src="{% static 'js/Chart.bundle.min.js' %}"></script>
 <script src="{% static 'js/generate_material_color.js' %}"></script>
 <script>
-    const ctx = document.querySelector('#graph').getContext('2d');
+    const ctx = document.querySelector('#age_graph').getContext('2d');
     const data = JSON.parse('{{module.data|safe}}');
 
     let labels = data.map((e) => e.label);
