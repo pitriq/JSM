@@ -2,6 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from jet.dashboard import modules
 from jet.dashboard.dashboard import AppIndexDashboard, Dashboard
 
+from .modules.activity_attendance import ActivityAttendance
 from .modules.people_age import PeopleAge
 
 
@@ -16,3 +17,4 @@ class CustomIndexDashboard(Dashboard):
             order=0
         ))
         self.children.append(PeopleAge())
+        self.children.append(ActivityAttendance())
