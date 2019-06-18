@@ -20,8 +20,3 @@ class ActivityAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             return request.user.activities.all()
         return qs
-
-    def number_of_students(self, obj):
-        return f'{obj.student.all().count()}'
-
-    number_of_students.short_description = 'Numero de inscriptos'

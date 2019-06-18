@@ -236,6 +236,12 @@ class Activity(models.Model):
     student = models.ManyToManyField(Person, related_name='activities')
     student.verbose_name = 'Inscriptos'
 
+    @property
+    def number_of_students(self):
+        return f'{self.student.all().count()}'
+
+    number_of_students.fget.short_description = 'Numero de inscriptos'
+
     class Meta:
         verbose_name = 'Actividad'
         verbose_name_plural = 'Actividades'
