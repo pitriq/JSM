@@ -1,0 +1,42 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/Chart.min.css' %}">
+
+<div style="padding:10%">
+    <canvas id="activity_student" width="300" height="300"></canvas>
+</div>
+<script src="{% static 'js/generate_material_color.js' %}"></script>
+<script src="{% static 'js/Chart.bundle.min.js' %}"></script>
+<script>
+    let contex = document.querySelector('#activity_student').getContext('2d');
+    let d = JSON.parse('{{module.data|safe}}');
+
+    let l = d.map((e) => e.label);
+    let v = d.map((e) => e.value);
+
+    const charte = new Chart(contex, {
+        type: 'bar',
+        data: {
+            labels:l,
+            datasets: [{
+                data: v,
+                backgroundColor: [...Array(v.length).keys()].map((e) => material_color())
+            }]
+        },
+        options: {
+            legend:{
+                display:false,
+            },
+             tooltips: {
+                enabled: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    
+</script>
