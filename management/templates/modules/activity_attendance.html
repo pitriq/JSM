@@ -1,0 +1,53 @@
+{% load static %}
+
+{% block extrahead %}
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+{% endblock %}
+
+
+<link rel="stylesheet" href="{% static 'css/Chart.min.css' %}">
+
+<div style="padding:10%">
+    <select id="activity">
+    {% for activity in module.activities %}
+        <option value="{{activity|lower}}">{{activity}}</option>
+    {% endfor %}
+    </select>
+    <canvas id="attendance_graph" width="300" height="300"></canvas>
+</div>
+
+<script src="{% static 'js/Chart.bundle.min.js' %}"></script>
+<script src="{% static 'js/generate_material_color.js' %}"></script>
+<script>
+    (function($){
+        const attendance_ctx = document.querySelector('#attendance_graph').getContext('2d');
+        const attendance_data = JSON.parse('{{module.data|safe}}');
+        const activity_select = $('#activity');
+
+        const selected = () => attendance_data.filter(
+            (e) => e.title.toLowerCase() == activity_select.val())[0];
+
+        const chart = new Chart(attendance_ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [selected().attendance, 100 - selected().attendance],
+                    backgroundColor: [...Array(2).keys()].map((e) => material_color())
+                }],
+                labels: ['Presentes', 'Ausentes']
+            },
+        });
+
+        activity_select.change((_) => {
+            while (chart.data.datasets[0].data.length > 0)
+                console.log(chart.data.datasets[0].data.pop());
+            //[selected().attendance, 100 - selected().attendance];
+            chart.data.datasets[0].data.push(selected().attendance);
+            chart.data.datasets[0].data.push(100 - selected().attendance);
+            chart.update();
+        });
+
+    })(django.jQuery);
+    
+</script>

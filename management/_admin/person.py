@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import admin
 
 from management.models import Family, Person, ResponsibleFamily, Son, VCard
@@ -47,7 +49,8 @@ class PersonAdmin(admin.ModelAdmin):
         'last_name',
         'is_working',
         'is_healthy',
-        'is_medicated')
+        'is_medicated',
+        'age')
     fieldsets = (
         ('Datos personales', {
             'fields': ('first_name', 'last_name', 'date_of_birth', 'dni', 'address', 'civil_status', 'dwelling',)
