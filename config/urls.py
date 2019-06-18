@@ -8,7 +8,7 @@ urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('', lambda _: redirect('admin/')),
+    path('', lambda _: redirect('blog/')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('blog/', include('blog.urls')),
