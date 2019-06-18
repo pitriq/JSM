@@ -21,6 +21,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
     'jet',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -130,3 +131,6 @@ CKEDITOR_UPLOAD_PATH = "blog/posts/"
 AUTH_USER_MODEL = 'accounts.User'
 
 django_heroku.settings(locals())
+
+JET_INDEX_DASHBOARD = 'config.dashboard.CustomIndexDashboard'
+JET_APP_INDEX_DASHBOARD = 'config.dashboard.CustomIndexDashboard'
