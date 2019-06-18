@@ -130,7 +130,9 @@ CKEDITOR_UPLOAD_PATH = "blog/posts/"
 
 AUTH_USER_MODEL = 'accounts.User'
 
-django_heroku.settings(locals())
+# Jet dashboard
 
-JET_INDEX_DASHBOARD = 'config.dashboard.CustomIndexDashboard'
-JET_APP_INDEX_DASHBOARD = 'config.dashboard.CustomIndexDashboard'
+JET_INDEX_DASHBOARD = 'management.dashboard.dashboard.CustomIndexDashboard'
+JET_APP_INDEX_DASHBOARD = 'management.dashboard.dashboard.CustomIndexDashboard'
+
+django_heroku.settings(locals())

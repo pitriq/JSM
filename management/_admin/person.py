@@ -74,8 +74,3 @@ class PersonAdmin(admin.ModelAdmin):
             'fields': ('note',)
         }),
     )
-
-    def age(self, obj):
-        return f'{int((datetime.date.today()-obj.date_of_birth).days / 365.25)}'
-
-    age.short_description = 'Edad'

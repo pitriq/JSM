@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from config.settings.development import AUTH_USER_MODEL
 
@@ -92,6 +93,12 @@ class Person(models.Model):
         'Hizo la confirmacion', default=False)
 
     note = models.TextField('Observaciones', default='', blank=True, null=True)
+
+    @property
+    def age(self):
+        return int((timezone.now().date() - self.date_of_birth).days / 365.25)
+
+    age.fget.short_description = 'Edad'
 
     class Meta:
         verbose_name = 'Persona'
