@@ -1,4 +1,4 @@
-const colors = [
+var colors = [
     "#ef5350",
     "#f06292",
     "#ba68c8",
@@ -14,4 +14,4 @@ const colors = [
     "#607d8b",
 ]
 
-const material_color = () => colors[Math.floor(Math.random() * colors.length)]
+var material_color = () => colors[Math.floor(Math.random() * colors.length)]

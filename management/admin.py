@@ -7,3 +7,4 @@ from ._admin.income import *
 from ._admin.person import *
 
 # Register your models here.
+admin.site.site_header = 'Adminitración de JSM'
